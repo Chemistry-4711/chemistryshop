@@ -28,8 +28,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
   <!-- Navbar on small screens -->
   <div id="navDemo" class="w3-hide w3-hide-large w3-hide-medium">
     <ul class="w3-navbar w3-left-align w3-large w3-black">
-      <li><a class="w3-padding-large" href="#">Link 1</a></li>
-      <li><a class="w3-padding-large" href="#">Link 2</a></li>
+      <li><a class="w3-padding-large" href="Inventory">Inventory</a></li>
+      <li><a class="w3-padding-large" href="Recipes">Recipes</a></li>
+	  <li><a class="w3-padding-large" href="Stock">Stock</a></li>
     </ul>
   </div>
 </div>
