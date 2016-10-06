@@ -20,17 +20,17 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
       <a class="w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
     </li>
     <li><a href="#" class="w3-padding-large w3-white">Home</a></li>
-    <li class="w3-hide-small"><a href="Inventory" class="w3-padding-large w3-hover-white">Inventory</a></li>
-   <li class="w3-hide-small"><a href="Recipes" class="w3-padding-large w3-hover-white">Recipes</a></li>
-    <li class="w3-hide-small"><a href="Stock" class="w3-padding-large w3-hover-white">Stock</a></li>
+    <li class="w3-hide-small"><a href="Receiving" class="w3-padding-large w3-hover-white">Receiving</a></li>
+   <li class="w3-hide-small"><a href="Production" class="w3-padding-large w3-hover-white">Production</a></li>
+    <li class="w3-hide-small"><a href="Sales" class="w3-padding-large w3-hover-white">Sales</a></li>
   </ul>
 
   <!-- Navbar on small screens -->
   <div id="navDemo" class="w3-hide w3-hide-large w3-hide-medium">
     <ul class="w3-navbar w3-left-align w3-large w3-black">
-      <li><a class="w3-padding-large" href="Inventory">Inventory</a></li>
-      <li><a class="w3-padding-large" href="Recipes">Recipes</a></li>
-	  <li><a class="w3-padding-large" href="Stock">Stock</a></li>
+      <li><a class="w3-padding-large" href="Receiving">Receiving</a></li>
+      <li><a class="w3-padding-large" href="Production">Production</a></li>
+	  <li><a class="w3-padding-large" href="Sales">Sales</a></li>
     </ul>
   </div>
 </div>
