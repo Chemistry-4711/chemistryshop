@@ -35,13 +35,19 @@ array('id' => '5', 'name' => 'Smoke Bomb', 'numberYielded' => 2,
 		parent::__construct();
 	}
 
-  //
+  // Retrieves an recipe based on the name
   public function get($which){
     foreach($this->data as $recipe){
         if($which == $recipe->name){
           return $recipe;
         }
     }
+  }
+
+  // retrieve all of the inventories
+  public function all()
+  {
+      return $this->data;
   }
 
 
