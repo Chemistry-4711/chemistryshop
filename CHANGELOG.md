@@ -7,3 +7,4 @@ CHANGELOG
 - added Recipes model with fake data and a get method JH
 - added Stock model - BC
 - fixed nav bar titles - KL
+- added Homepage controller and remove Welcome controller (updated routes.php accordingly)
