@@ -13,7 +13,7 @@
  * @version 06/10/2016
  * 
  */
-class Stock {
+class Stock extends CI_Model {
     
     // Constructor
     public function __construct() {
