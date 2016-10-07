@@ -12,3 +12,4 @@ CHANGELOG
 - updated receiving controller to create welcome_message(temporary until views created) - JH
 - added production controller and recipe views - KL
 - fixed nav bar to link properly - KL
+- fixed link to homepage - KL
