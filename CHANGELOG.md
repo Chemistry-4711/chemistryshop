@@ -10,3 +10,4 @@ CHANGELOG
 - added Homepage controller and remove Welcome controller (updated routes.php accordingly)
 - created sales controller - TS
 - updated receiving controller to create welcome_message(temporary until views created) - JH
+- Created 2 views which displays a list of inventory items and their receipts for each item - JH
