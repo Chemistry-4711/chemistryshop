@@ -10,9 +10,11 @@ class Receiving extends Application{
   }
 
   /**
-  * Homepage for the recipes
+  * Homepage for the received
   */
   public function index(){
+    $this->data['pagebody'] = 'welcome_message';
+    $this->render();
   }
 
 }
