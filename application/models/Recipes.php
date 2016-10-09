@@ -2,7 +2,7 @@
 
 class Recipes extends CI_Model{
 
-var $data = array(
+    var $data = array(
                 array('id' => '0', 'name' => 'C4', 'numberYielded' => 1, 'recipe' => 'Mix lithium, gun-powder, H20, and 2 egg and let it solidify.',
                 'cost' => array('lithium' => 1, 'gun-powder' => 3, 'h2o' => 1, 'eggs' => 2)),
 

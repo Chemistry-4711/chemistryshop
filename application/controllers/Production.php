@@ -23,6 +23,9 @@ class Production extends Application{
 
   }
 
+  /*
+  * Shows a single recipe with the ingredients needed for it to be created
+  */
   public function show($id){
 
       $this->data['pagebody'] = 'recipes_single';
@@ -35,16 +38,40 @@ class Production extends Application{
       // get the names of the ingredients
       $names = array_keys($recipe['cost']);
 
+      // get the cost
+      $cost = $recipe['cost'];
+
       // ingredients array to store the names
       $ingredients = array();
-
+      // flag to check if its able to make
+      $ableToMake = true;
       foreach($names as $name)
       {
-          $ingredients[] = array('name' => $name);
+          // get the inventory of the ingredient
+          $inventory = $this->inventory->get($name);
+
+          // check if theres enough of ingredients required
+          $amount = ($inventory['quantity'] - $cost[$name]);
+
+          // flags ingredients that are not available
+          if($amount < 0){
+              $ableToMake = false;
+              $ingredients[] = array('name' => $name, 'costToMake' => $cost[$name], 'inventory' => $inventory['quantity'], 'available' => "(not enough available)");
+          }else {
+              $ingredients[] = array('name' => $name, 'costToMake' => $cost[$name], 'inventory' => $inventory['quantity'], 'available' => "");
+          }
+
       }
 
-      $this->data['ingredients'] = $ingredients;
+      // generate the message if recipe is makeable
+      if($ableToMake){
+          $message = "You can create this recipe. Would you like make " . $recipe['name'] . "?";
+      }else{
+          $message = "You can can't create this recipe. Please buy more ingredients.";
+      }
 
+      $this->data['message'] = $message;
+      $this->data['ingredients'] = $ingredients;
       $this->render();
   }
 
