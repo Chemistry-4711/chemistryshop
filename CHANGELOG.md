@@ -16,3 +16,4 @@ CHANGELOG
 - fixed link to homepage - KL
 - added sales_order and sales_menu views. also updates Sales controller to match - inqr
 - added more details to the recipes single view" - KL
+- added bootstrap to template and styled the following views: inventoryList, inventoryReceipt, recipes_list, sales_menu, template - MK
