@@ -11,6 +11,7 @@
                 <th>Quantity</th>
                 <th>Price</th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -20,6 +21,7 @@
                 <td>{description}</td>
                 <td>{quantity}</td>
                 <td>{price}</td>
+                <td><input type="numeric" value="0"/></td>
                 <td><a href="/sales/get/{id}">Order Now!</a></td>
             </tr>
             {/stock}
