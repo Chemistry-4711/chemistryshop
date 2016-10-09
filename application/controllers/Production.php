@@ -56,9 +56,9 @@ class Production extends Application{
           // flags ingredients that are not available
           if($amount < 0){
               $ableToMake = false;
-              $ingredients[] = array('name' => $name, 'costToMake' => $cost[$name], 'inventory' => $inventory['quantity'], 'available' => "(not enough available)");
+              $ingredients[] = array('name' => $name, 'costToMake' => $cost[$name], 'inventory' => $inventory['quantity'], 'available' => "Not Enough Available");
           }else {
-              $ingredients[] = array('name' => $name, 'costToMake' => $cost[$name], 'inventory' => $inventory['quantity'], 'available' => "");
+              $ingredients[] = array('name' => $name, 'costToMake' => $cost[$name], 'inventory' => $inventory['quantity'], 'available' => "Enough Available");
           }
 
       }

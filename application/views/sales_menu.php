@@ -8,9 +8,9 @@
             <tr>
                 <th>Item Name</th>
                 <th>Description</th>
+                <th>Quantity Available</th>
                 <th>Quantity</th>
                 <th>Price</th>
-                <th></th>
                 <th></th>
             </tr>
         </thead>
@@ -20,9 +20,9 @@
                 <td>{name}</td>
                 <td>{description}</td>
                 <td>{quantity}</td>
+                <td><input class="form-control" type="numeric" style="width:40px;" value="1"/></td>
                 <td>{price}</td>
-                <td><input type="numeric" value="0"/></td>
-                <td><a href="/sales/get/{id}">Order Now!</a></td>
+                <td><a href="/sales/get/{id}"><button type="button" class="btn btn-default btn-danger btn-sm">Order Now</button></a></td>
             </tr>
             {/stock}
         </tbody>

@@ -5,15 +5,14 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/css/bootstrap.css">
+<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/css/bootstrap.css">
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 .w3-navbar,h1,button {font-family: "Montserrat", sans-serif}
 .fa-flask,.fa-coffee {font-size:200px}
 table a {color: red}
-input {width: 40px}
 </style>
 <body>
 
