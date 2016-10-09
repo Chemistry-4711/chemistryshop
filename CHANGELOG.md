@@ -18,3 +18,4 @@ CHANGELOG
 - added more details to the recipes single view" - KL
 - added bootstrap to template and styled the following views: inventoryList, inventoryReceipt, recipes_list, sales_menu, template - MK
 - added summary of data to homepage, refactored Stock model - KL
+- added quantity box in sales and included a thank you message - BC

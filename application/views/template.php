@@ -13,6 +13,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 .w3-navbar,h1,button {font-family: "Montserrat", sans-serif}
 .fa-flask,.fa-coffee {font-size:200px}
 table a {color: red}
+input {width: 40px}
 </style>
 <body>
 
