@@ -9,7 +9,7 @@
 class Inventory extends CI_Model {
 
     var $data = array(
-        array('id' => '0',  'name' => 'gun-powder',         'price' => 420,  'supplier' => 'ned',          'quantity' => 0),
+        array('id' => '0',  'name' => 'gun-powder',         'price' => 420,  'supplier' => 'ned',          'quantity' => 1),
         array('id' => '1',  'name' => 'h2o',                'price' => 1,    'supplier' => 'wonderland',   'quantity' => 6666),
         array('id' => '2',  'name' => 'peanuts',            'price' => 5,    'supplier' => 'superstore',   'quantity' => 50),
         array('id' => '3',  'name' => 'lithium',            'price' => 200,  'supplier' => 'amazon',       'quantity' => 666),

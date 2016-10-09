@@ -26,9 +26,9 @@ class Receiving extends Application{
     $source = array();
     $source = $this->inventory->get($itemName);
 
-    $this->data['name'] = $source['name'];
+    $this->data['name'] = ucfirst($source['name']);
     $this->data['price'] = $source['price'];
-    $this->data['supplier'] = $source['supplier'];
+    $this->data['supplier'] = ucfirst($source['supplier']);
     $this->data['quantity'] = $source['quantity'];
     $this->render();
   }
