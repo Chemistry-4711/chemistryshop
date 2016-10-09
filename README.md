@@ -1,21 +1,22 @@
-## CodeIgniter3.1-starter3
+## Chemistry Shop
+### CHANGELOG
 
-This project can be used as a starter for a webapp built with CodeIgniter 3.1.
-
-This starter builds on [CodeIgniter3.1-starter2](https://github.com/jedi-academy/CodeIgniter3.1-starter2),
-adding a base model with CRUD methods.
-
-**controllers/Welcome.php** has been modified to set the name of the desired
-view file as a *data* parameter, and to then invoke the inherited *render*
-method to trigger presentation.
-
-A view template is provided. The CSS has been extracted to an appropriate file
-in the public folder. Styling could be improved by using a CSS framework, like
-Bootstrap.
-
-The **application/config/autoload.php** configuration has been modified
-to preload the template parser library and the url helper.
-
-Configure your web server or virtual host so that your project's
-document root maps to this **public** folder inside your project.
-
+##### Release 1.0
+- added template for views KL
+- added Inventory model - MK
+- added Recipes model with fake data and a get method JH
+- added Stock model - BC
+- fixed nav bar titles - KL
+- added Homepage controller and remove Welcome controller (updated routes.php accordingly)
+- added Sales controller - inqr
+- updated receiving controller to create welcome_message(temporary until views created) - JH
+- Created 2 views which displays a list of inventory items and their receipts for each item - JH
+- added production controller and recipe views - KL
+- fixed nav bar to link properly - KL
+- fixed link to homepage - KL
+- added sales_order and sales_menu views. also updates Sales controller to match - inqr
+- added more details to the recipes single view" - KL
+- added bootstrap to template and styled the following views: inventoryList, inventoryReceipt, recipes_list, sales_menu, template - MK
+- added summary of data to homepage, refactored Stock model - KL
+- added quantity box in sales and included a thank you message - BC
+- updated exsisting files for better cosistency; added more styling to pages, revamped all the single-item pages and fixed error where bootstrap wasn't linked to pages properly; - MK
