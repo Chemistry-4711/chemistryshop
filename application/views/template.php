@@ -2,14 +2,17 @@
 <html>
 <title>The Chemistry Shop</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/bootstrap.css">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 .w3-navbar,h1,button {font-family: "Montserrat", sans-serif}
-.fa-anchor,.fa-coffee {font-size:200px}
+.fa-flask,.fa-coffee {font-size:200px}
+table a {color: red}
 </style>
 <body>
 
@@ -30,14 +33,14 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
     <ul class="w3-navbar w3-left-align w3-large w3-black">
       <li><a class="w3-padding-large" href="/receiving">Receiving</a></li>
       <li><a class="w3-padding-large" href="/production">Production</a></li>
-	  <li><a class="w3-padding-large" href="/sales">Sales</a></li>
+      <li><a class="w3-padding-large" href="/sales">Sales</a></li>
     </ul>
   </div>
 </div>
 
 <!-- Header -->
 <header class="w3-container w3-red w3-center w3-padding-128">
-  <h1 class="w3-margin w3-jumbo">The Chemistry Shop</h1>
+  <h1 class="w3-margin w3-jumbo">The Chemistry Shop <i class="fa fa-bomb w3-text-black"></i></h1>
 </header>
 
 <!-- First Grid -->
@@ -48,7 +51,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
     </div>
 
     <div class="w3-third w3-center">
-      <i class="fa fa-anchor w3-padding-64 w3-text-red"></i>
+      <i class="fa fa-flask w3-padding-64 w3-text-red"></i>
     </div>
   </div>
 </div>
