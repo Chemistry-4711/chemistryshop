@@ -1,11 +1,11 @@
 
-<h1>The Recipe</h1>
+<h1>The Recipe for {name}</h1>
 
 <p>
-    {name}<br>
-
     Ingredients Required: <br>
     {ingredients}
-        {name}<br>
+        {costToMake} {name} {available}  ({inventory} in inventory)<br>
     {/ingredients}
+    <br>
+    {message}
 </p>
