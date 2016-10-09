@@ -15,3 +15,4 @@ CHANGELOG
 - fixed nav bar to link properly - KL
 - fixed link to homepage - KL
 - added sales_order and sales_menu views. also updates Sales controller to match - inqr
+- added more details to the recipes single view" - KL
