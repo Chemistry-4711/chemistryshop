@@ -1,0 +1,5 @@
+To create a SQL dump:
+mysqldump --databases --add-drop-table chemistryfrontend > chemistryFrontEnd.sql -u root -p
+
+To open a SQL dump:
+mysql -u username -p --database chemistryfrontend < ".../chemistryFrontEnd.sql"
