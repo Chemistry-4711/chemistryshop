@@ -16,7 +16,19 @@ class Receiving extends Application{
   /**
   * Homepage for the received
   */
-  public function index(){
+  public function index()
+  {
+
+      $userrole = $this->session->userdata('userrole');
+
+      // check user role
+      if ($userrole == 'guest') {
+          $message = 'You are not authorized to access this page. Go away';
+          $this->data['content'] = $message;
+          $this->render();
+          return;
+      }
+
     global $bulk;
 
     $this->data['pagebody'] = 'inventoryList';

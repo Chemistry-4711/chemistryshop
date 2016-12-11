@@ -70,16 +70,20 @@ class Homepage extends Application
         }
 
         // get the best seller
-        $best = 0;
-        $id;
-        foreach($recipes as $key => $value) {
-            if($value > $best){
-                $best = $value;
-                $id   = $key;
+        if(!empty($recipes)){
+            $best = 0;
+            $id;
+            foreach($recipes as $key => $value) {
+                if($value > $best){
+                    $best = $value;
+                    $id   = $key;
+                }
             }
+            $item = (array)$this->stock->get($id);
+            $this->data['bestSeller'] = $item['name'];
+        }else{
+            $this->data['bestSeller'] = "unknown, sorry";
         }
-        $item = (array)$this->stock->get($id);
-        $this->data['bestSeller'] = $item['name'];
 
         $this->data['salesTotal'] = number_format($total, 2);
     }
