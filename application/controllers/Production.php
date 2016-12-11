@@ -16,6 +16,16 @@ class Production extends Application
   */
   public function index()
   {
+      $userrole = $this->session->userdata('userrole');
+
+      // check user role
+      if ($userrole == 'guest') {
+          $message = 'You are not authorized to access this page. Go away';
+          $this->data['content'] = $message;
+          $this->render();
+          return;
+      }
+
       $this->data['pagebody'] = 'recipes_list';
 
       $recipes = $this->santize_input($this->recipes->all());
