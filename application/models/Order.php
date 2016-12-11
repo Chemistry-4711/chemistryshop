@@ -62,21 +62,38 @@ class Order extends CI_Model
         return $result;
     }
 
-    // test for at least one menu item in each category
+    // check for the stock
     public function validate() {
-        // assume no items in each category
-        foreach($this->categories->all() as $id => $category)
-            $found[$category->id] = false;
-        // what do we have?
-        foreach($this->items as $code => $item) {
-            $menuitem = $this->menu->get($code);
-            $found[$menuitem->category] = true;
+
+        // flag to check if enough quantity in stock
+        $flag = true;
+
+        // check if we have enough stock !
+        foreach($this->items as $key => $value) {
+            $item = $this->stock->get($key);
+            $item = json_decode(json_encode($item), true);
+
+            // flag if not enough
+            if($item['quantity'] < $value){
+                $flag = false;
+            }
         }
-        // if any categories are empty, the order is not valid
-        foreach($found as $cat => $ok)
-            if (! $ok) return false;
-        // phew - the order is good
-        return true;
+
+        // decrement stock quantity
+        if($flag){
+            foreach($this->items as $key => $value) {
+                $item = $this->stock->get($key);
+                $item = json_decode(json_encode($item), true);
+
+                // decrement quantity
+                $item['quantity'] -= $value;
+
+                // update record in DB
+                $this->stock->update($item);
+            }
+        }
+
+        return $flag;
     }
 
     public function save() {

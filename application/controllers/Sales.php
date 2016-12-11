@@ -55,8 +55,8 @@ class Sales extends Application{
     public function checkout() {
         $order = new Order($this->session->userdata('order'));
         // ignore invalid requests
-        // if (! $order->validate())
-        //     redirect('/sales/neworder');
+        if (!$order->validate())
+            redirect('/sales/neworder');
 
         $order->save();
         $this->session->unset_userdata('order');
