@@ -26,6 +26,7 @@ table a {color: red}
     <li class="w3-hide-small"><a href="/receiving" class="w3-padding-large w3-hover-white">Receiving</a></li>
     <li class="w3-hide-small"><a href="/production" class="w3-padding-large w3-hover-white">Production</a></li>
     <li class="w3-hide-small"><a href="/sales" class="w3-padding-large w3-hover-white">Sales</a></li>
+    <li class="w3-hide-small"><a href="/adminedit" class="w3-padding-large w3-hover-white">Administrator</a></li>
     <li class="w3-hide-small navbar-right"><a href="/toggle" class="w3-padding-large w3-hover-white">Toggle Role</a></li>
     <li class="w3-padding-large w3-hover-white navbar-right" style="cursor:default">Role: {userrole}</li>
   </ul>
@@ -36,6 +37,7 @@ table a {color: red}
       <li><a class="w3-padding-large" href="/receiving">Receiving</a></li>
       <li><a class="w3-padding-large" href="/production">Production</a></li>
       <li><a class="w3-padding-large" href="/sales">Sales</a></li>
+      <li><a class="w3-padding-large" href="/adminedit">Administrator</a></li>
       <li><a class="w3-padding-large" href="/toggle">Toggle Role</a></li>
       <li class="w3-padding-large navbar-right" style="cursor:default">Role: {userrole}<li>
     </ul>
