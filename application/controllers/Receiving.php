@@ -15,7 +15,7 @@ class Receiving extends Application{
   public function index(){
     $this->data['pagebody'] = 'inventoryList';
     $source = array();
-    $source = $this->inventory->all();
+    $source = $this->santize_input($this->inventory->all());
 
     $this->data['inventory'] = $source;
     $this->render();
@@ -24,13 +24,21 @@ class Receiving extends Application{
   public function receipt($itemName){
     $this->data['pagebody'] = 'inventoryReceipt';
     $source = array();
-    $source = $this->inventory->get($itemName);
+    $source = (array) $this->inventory->get($itemName);
 
     $this->data['name'] = ucfirst($source['name']);
     $this->data['price'] = $source['price'];
     $this->data['supplier'] = ucfirst($source['supplier']);
     $this->data['quantity'] = $source['quantity'];
     $this->render();
+  }
+
+  private function santize_input($record) {
+      $newArray;
+      foreach ( $record as $key => $value )
+          $newArray[$key] = json_decode(json_encode($value), true);
+
+      return $newArray;
   }
 
 }

@@ -32,7 +32,6 @@ class Homepage extends Application
     */
     private function ingredientsSummary()
     {
-        // get all the ingredients in the inventory
         $ingredients = $this->santize_input($this->inventory->all());
 
         // store the total cost of ingredients

@@ -18,4 +18,15 @@ class Recipes extends MY_Model {
         return $config;
     }
 
+    function getAllwithCost(){
+      $result = $this->db->query("SELECT * FROM recipes INNER JOIN costs ON recipes.name = costs.name");
+      $data = $result->result_array();
+      return $data;
+    }
+
+    function getWithCost($id){
+      $result = $this->db->query("SELECT * FROM recipes INNER JOIN costs ON recipes.name = costs.name WHERE recipes.id='$id'");
+      $data = $result->result_array();
+      return $data;
+    }
 }
