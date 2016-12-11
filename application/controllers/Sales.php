@@ -113,5 +113,5 @@ class Sales extends Application{
         $this->data['content'] = $this->parsedown->parse($stuff);
         $this->render();
     }
-
+    
 }

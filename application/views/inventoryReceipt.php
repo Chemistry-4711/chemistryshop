@@ -13,7 +13,6 @@
                 <th>Supplier</th>
                 <th>Price</th>
                 <th>Quantity</th>
-                <th>Total Cost</th>
             </tr>
         </thead>
         <tbody>
@@ -22,7 +21,6 @@
                 <td>{supplier}</td>
                 <td>{price}</td>
                 <td>{quantity}</td>
-                <td><?php echo $price * $quantity; ?></td>
             </tr>
         </tbody>
     </table>

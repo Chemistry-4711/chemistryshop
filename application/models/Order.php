@@ -85,8 +85,9 @@ class Order extends CI_Model
                 $item = $this->stock->get($key);
                 $item = json_decode(json_encode($item), true);
 
-                // decrement quantity
+                // decrement quantity & increment numSold
                 $item['quantity'] -= $value;
+                $item['num_sold'] += 1;
 
                 // update record in DB
                 $this->stock->update($item);
