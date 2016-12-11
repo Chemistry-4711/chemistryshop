@@ -33,7 +33,7 @@ class Homepage extends Application
     private function ingredientsSummary()
     {
         // get all the ingredients in the inventory
-        $ingredients = $this->inventory->all();
+        $ingredients = $this->santize_input($this->inventory->all());
 
         // store the total cost of ingredients
         $ingredientsTotal = 0;
@@ -54,8 +54,7 @@ class Homepage extends Application
     private function stocksSummary()
     {
         // get all the Stock
-        $stocks = $this->stock->all();
-
+        $stocks = $this->santize_input($this->stock->all());
         // store the total cost of the stocks
         $stocksTotal = 0;
 
@@ -67,6 +66,14 @@ class Homepage extends Application
 
         // number of different products in Stock
         $this->data['numOfStocks'] = count($stocks);
+    }
+
+    private function santize_input($record) {
+        $newArray;
+        foreach ( $record as $key => $value )
+            $newArray[$key] = json_decode(json_encode($value), true);
+
+        return $newArray;
     }
 
 }

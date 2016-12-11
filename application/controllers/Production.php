@@ -16,7 +16,7 @@ class Production extends Application{
 
       $this->data['pagebody'] = 'recipes_list';
 
-      $recipes = $this->recipes->all();
+      $recipes = $this->santize_input($this->recipes->all());
 
       $this->data['recipes'] = $recipes;
       $this->render();
@@ -31,6 +31,7 @@ class Production extends Application{
       $this->data['pagebody'] = 'recipes_single';
 
       $recipe = $this->recipes->get($id);
+      $recipe = json_decode(json_encode($recipe), true);
 
       // merge the data for recipe
       $this->data = array_merge($this->data, $recipe);
@@ -73,6 +74,14 @@ class Production extends Application{
       $this->data['message'] = $message;
       $this->data['ingredients'] = $ingredients;
       $this->render();
+  }
+
+  private function santize_input($record) {
+      $newArray;
+      foreach ( $record as $key => $value )
+          $newArray[$key] = json_decode(json_encode($value), true);
+
+      return $newArray;
   }
 
 }
