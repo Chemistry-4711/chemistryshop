@@ -10,7 +10,7 @@
         </thead>
         <tbody>
             {inventory}
-            <tr><td><a href = "receiving/receipt/{name}">{name}</a></td></tr>
+            <tr><td><a href = "receiving/receipt/{id}">{name}</a></td></tr>
             {/inventory}
         </tbody>
     </table>

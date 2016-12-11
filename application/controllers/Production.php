@@ -1,39 +1,41 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Production extends Application{
+class Production extends Application
+{
 
 // Constructor
-  function __construct(){
-    parent::__construct();
+  public function __construct()
+  {
+      parent::__construct();
   }
 
   /**
   * Homepage for the recipes
   */
-  public function index(){
-
+  public function index()
+  {
       $this->data['pagebody'] = 'recipes_list';
 
       $recipes = $this->santize_input($this->recipes->all());
 
       $this->data['recipes'] = $recipes;
       $this->render();
-
   }
 
   /*
   * Shows a single recipe with the ingredients needed for it to be created
   */
-  public function show($id){
-
+  public function show($id)
+  {
       $this->data['pagebody'] = 'recipes_single';
 
       //gets all recipes with costs **comes back as an array of arrays
       $tmp = $this->recipes->getWithCost($id);
 
       $newData = array(); // initialize the array we will be working with later once the data is parsed and sorted
+
       foreach($tmp as $a){
           foreach($a as $value){
             if($value == "0"){
@@ -53,16 +55,30 @@ class Production extends Application{
       $ingredients = array();
       $ableToMake = true;
       //loop through the current data we have
-      while($ingredient = current($newData)){
-        $key = key($newData);//the name of the ingredient we are interested in
-        $inventory = $this->inventory->get($key);
-        $amount = ($inventory['quantity'] - $ingredient);
-        if($amount < 0){
-          $ableToMake = false;
-          $ingredients[] = array('name' => $key, 'costToMake' => $newData[$key], 'inventory' => $inventory['quantity'], 'available' => "Not Enough Available");
-        }else{
-          $ingredients[] = array('name' => $key, 'costToMake' => $newData[$key], 'inventory' => $inventory['quantity'], 'available' => "Enough Available");
-        }
+
+      $inventoryList = $this->santize_input($this->inventory->all());
+
+      while ($ingredient = current($newData)) {
+
+          $key = key($newData);//the name of the ingredient we are interested in
+          $name = $key;
+          // finding the id of our item
+          foreach ( $inventoryList as $inventoryItem ) {
+              if($inventoryItem['name'] == $key) {
+                  $key = $inventoryItem['id'];
+                  break;
+              }
+          }
+
+          $inventory = json_decode(json_encode($this->inventory->get($key)), true);
+
+          $amount = (intval($inventory['quantity']) - intval($ingredient));
+          if ($amount < 0) {
+              $ableToMake = false;
+              $ingredients[] = array('name' => $name, 'costToMake' => $newData[$name], 'inventory' => $inventory['quantity'], 'available' => "Not Enough Available");
+          } else {
+              $ingredients[] = array('name' => $name, 'costToMake' => $newData[$name], 'inventory' => $inventory['quantity'], 'available' => "Enough Available");
+          }
         //go to next element in the array
         next($newData);
       }
@@ -79,12 +95,13 @@ class Production extends Application{
 
   }
 
-  private function santize_input($record) {
-      $newArray;
-      foreach ( $record as $key => $value )
-          $newArray[$key] = json_decode(json_encode($value), true);
+    private function santize_input($record)
+    {
+        $newArray;
+        foreach ($record as $key => $value) {
+            $newArray[$key] = json_decode(json_encode($value), true);
+        }
 
-      return $newArray;
-  }
-
+        return $newArray;
+    }
 }
