@@ -30,43 +30,45 @@ class Production extends Application{
 
       $this->data['pagebody'] = 'recipes_single';
 
-      $recipe = $this->recipes->get($id);
-      $recipe = json_decode(json_encode($recipe), true);
+      //gets all recipes with costs **comes back as an array of arrays
+      $tmp = $this->recipes->getWithCost($id);
 
-      // merge the data for recipe
-      $this->data = array_merge($this->data, $recipe);
-
-      // get the names of the ingredients
-      $names = array_keys($recipe['cost']);
-
-      // get the cost
-      $cost = $recipe['cost'];
-
-      // ingredients array to store the names
-      $ingredients = array();
-      // flag to check if its able to make
-      $ableToMake = true;
-      foreach($names as $name)
-      {
-          // get the inventory of the ingredient
-          $inventory = $this->inventory->get($name);
-
-          // check if theres enough of ingredients required
-          $amount = ($inventory['quantity'] - $cost[$name]);
-
-          // flags ingredients that are not available
-          if($amount < 0){
-              $ableToMake = false;
-              $ingredients[] = array('name' => $name, 'costToMake' => $cost[$name], 'inventory' => $inventory['quantity'], 'available' => "Not Enough Available");
-          }else {
-              $ingredients[] = array('name' => $name, 'costToMake' => $cost[$name], 'inventory' => $inventory['quantity'], 'available' => "Enough Available");
+      $newData = array(); // initialize the array we will be working with later once the data is parsed and sorted
+      foreach($tmp as $a){
+          foreach($a as $value){
+            if($value == "0"){
+              //unset any ingredients that we don't need
+              $toDelete = array_search($value, $a);
+              unset($a[$toDelete]);
+            }
           }
-
+          //since there is only 1 recipe we are interested in
+          $newData = $a;
+      }
+      //gets the name of the recipe
+      $itemName = $newData["name"];
+      $this->data['name'] = $itemName;
+      //unset any unwanted data
+      unset($newData["id"], $newData["name"], $newData["numberYielded"], $newData["recipe"]);
+      $ingredients = array();
+      $ableToMake = true;
+      //loop through the current data we have
+      while($ingredient = current($newData)){
+        $key = key($newData);//the name of the ingredient we are interested in
+        $inventory = $this->inventory->get($key);
+        $amount = ($inventory['quantity'] - $ingredient);
+        if($amount < 0){
+          $ableToMake = false;
+          $ingredients[] = array('name' => $key, 'costToMake' => $newData[$key], 'inventory' => $inventory['quantity'], 'available' => "Not Enough Available");
+        }else{
+          $ingredients[] = array('name' => $key, 'costToMake' => $newData[$key], 'inventory' => $inventory['quantity'], 'available' => "Enough Available");
+        }
+        //go to next element in the array
+        next($newData);
       }
 
-      // generate the message if recipe is makeable
       if($ableToMake){
-          $message = "You can create this recipe. Would you like make " . $recipe['name'] . "?";
+          $message = "You can create this recipe. Would you like make " . $itemName . "?";
       }else{
           $message = "You can can't create this recipe. Please buy more ingredients.";
       }
@@ -74,6 +76,7 @@ class Production extends Application{
       $this->data['message'] = $message;
       $this->data['ingredients'] = $ingredients;
       $this->render();
+
   }
 
   private function santize_input($record) {
