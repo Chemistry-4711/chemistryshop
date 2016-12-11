@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Bitnami/wampstack-5.6.25-0/apache2/htdocs/chemistryshop/application/views/inventoryList.php</file>
+            <file>file:/C:/Bitnami/wampstack-5.6.25-0/apache2/htdocs/chemistryshop/application/views/recipes_single.php</file>
+            <file>file:/C:/Bitnami/wampstack-5.6.25-0/apache2/htdocs/chemistryshop/application/config/development/database.php</file>
+            <file>file:/C:/Bitnami/wampstack-5.6.25-0/apache2/htdocs/chemistryshop/application/core/MY_Model.php</file>
+            <file>file:/C:/Bitnami/wampstack-5.6.25-0/apache2/htdocs/chemistryshop/application/controllers/Toggle.php</file>
+            <file>file:/C:/Bitnami/wampstack-5.6.25-0/apache2/htdocs/chemistryshop/application/views/inventoryReceipt.php</file>
+            <file>file:/C:/Bitnami/wampstack-5.6.25-0/apache2/htdocs/chemistryshop/application/views/recipes_list.php</file>
+            <file>file:/C:/Bitnami/wampstack-5.6.25-0/apache2/htdocs/chemistryshop/application/controllers/Sales.php</file>
+            <file>file:/C:/Bitnami/wampstack-5.6.25-0/apache2/htdocs/chemistryshop/application/controllers/Receiving.php</file>
+            <file>file:/C:/Bitnami/wampstack-5.6.25-0/apache2/htdocs/chemistryshop/application/views/welcome_message.php</file>
+            <file>file:/C:/Bitnami/wampstack-5.6.25-0/apache2/htdocs/chemistryshop/application/core/MY_Controller.php</file>
+            <file>file:/C:/Bitnami/wampstack-5.6.25-0/apache2/htdocs/chemistryshop/application/views/template.php</file>
+            <file>file:/C:/Bitnami/wampstack-5.6.25-0/apache2/htdocs/chemistryshop/application/views/sales_order.php</file>
+            <file>file:/C:/Bitnami/wampstack-5.6.25-0/apache2/htdocs/chemistryshop/application/views/sales_menu.php</file>
+            <file>file:/C:/Bitnami/wampstack-5.6.25-0/apache2/htdocs/chemistryshop/application/config/config.php</file>
+            <file>file:/C:/Bitnami/wampstack-5.6.25-0/apache2/htdocs/chemistryshop/application/config/autoload.php</file>
+            <file>file:/C:/Bitnami/wampstack-5.6.25-0/apache2/htdocs/chemistryshop/application/controllers/Production.php</file>
+            <file>file:/C:/Bitnami/wampstack-5.6.25-0/apache2/htdocs/chemistryshop/application/views/index.html</file>
+            <file>file:/C:/Bitnami/wampstack-5.6.25-0/apache2/htdocs/chemistryshop/application/controllers/Homepage.php</file>
+            <file>file:/C:/Bitnami/wampstack-5.6.25-0/apache2/htdocs/chemistryshop/application/models/Inventory.php</file>
+        </group>
+    </open-files>
+</project-private>

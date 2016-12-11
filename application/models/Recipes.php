@@ -1,53 +1,86 @@
 <?php
 
-class Recipes extends CI_Model{
+class Recipes extends MY_Model {
 
-    var $data = array(
-                array('id' => '0', 'name' => 'C4', 'numberYielded' => 1, 'recipe' => 'Mix lithium, gun-powder, H20, and 2 egg and let it solidify.',
-                'cost' => array('lithium' => 1, 'gun-powder' => 3, 'h2o' => 1, 'eggs' => 2)),
+    // Constructor
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-                array('id' => '1', 'name' => 'Methamphetamine', 'numberYielded' => 1,
-                'recipe' => 'Mix the eggs with the flour while adding water and slowly sift till the hardens',
-                'cost' => array('eggs' => 4, 'flour' => 6, 'h2o' => 1)),
+    function rules() {
+        $config = [
+            ['field'=>'id', 'label'=>'Recipe code', 'rules'=> 'required|integer'],
+            ['field'=>'name', 'label'=>'Recipe name', 'rules'=> 'required'],
+            ['field'=>'numberYielded', 'label'=>'Recipe Yielded', 'rules'=> 'required|integer'],
+            ['field'=>'recipe', 'label'=>'Recipe', 'rules'=> 'required']
+        ];
+        return $config;
+    }
 
-                array('id' => '2', 'name' => 'Advil', 'numberYielded' => 4,
-                'recipe' => 'Add vanilla extract to hydrochloric acid and once it changes color, add 5 peanuts',
-                'cost' => array('vanilla-extract' => 3, 'hydrochloric-acid' => 2, 'peanuts' => 5)),
+    function getAllwithCost(){
+      $result = $this->db->query("SELECT * FROM recipes INNER JOIN costs ON recipes.name = costs.name");
+      $data = $result->result_array();
+      return $data;
+    }
 
-                array('id' => '3', 'name' => 'Vitamins', 'numberYielded' => 3,
-                'recipe' => 'Encapsule large amounts hydrochloric acid',
-                'cost' => array('hydrochloric-acid' => 5)),
+    function getWithCost($id){
+      $result = $this->db->query("SELECT * FROM recipes INNER JOIN costs ON recipes.name = costs.name WHERE recipes.id='$id'");
+      $data = $result->result_array();
+      return $data;
+    }
 
-                array('id' => '4', 'name' => 'Stink Bomb', 'numberYielded' => 1,
-                'recipe' => 'Mix milk and peanuts with gun powder',
-                'cost' => array('milk' => 4, 'peanuts' => 2, 'gun-powder' => 3)),
+    function getAllCostItems(){
+      $result = $this->db->query("SELECT * FROM costs");
+      $data = $result->result_array();
+      return $data;
+    }
 
-                array('id' => '5', 'name' => 'Smoke Bomb', 'numberYielded' => 2,
-                'recipe' => 'Mix gunpowder with sifted flour and 1 egg',
-                'cost' => array('gun-powder' => 30, 'flour' => 5, 'eggs' => 1))
-                );
+    function addCostItem($data){
+      $this->db->insert('costs', $data);
+    }
 
-
-  // Constructor
-	public function __construct()
-	{
-		parent::__construct();
-	}
-
-  // Retrieves an recipe based on the name
-  public function get($id) {
-      foreach ($this->data as $row) {
-          if ($row['id'] == $id) {
-              return $row;
-          }
+    function getCostItem($id){
+      $result = $this->db->query("SELECT name FROM recipes WHERE id=$id");
+      $value = $result->result_array();
+      $toEdit = "";
+      foreach($value as $x){
+        $toEdit = $x['name'];
+        break;
       }
-      return null;
-  }
 
-  // retrieve all of the inventories
-  public function all()
-  {
-      return $this->data;
-  }
+      $costItem = $this->db->query("SELECT * FROM costs WHERE name='$toEdit'");
+      $costItemResult = $costItem->result_array();
+      return $costItemResult;
+    }
 
+    function editCostItem($data){
+      $this->db->where('id', $data['id']);
+      $this->db->update('costs', $data);
+    }
+
+    function deleteCost($id){
+      $result = $this->db->query("SELECT name FROM recipes WHERE id=$id");
+      $value = $result->result_array();
+      $toDelete = "";
+      foreach($value as $x){
+        $toDelete = $x['name'];
+        break;
+      }
+      $this->db->where('name', $toDelete);
+      $this->db->delete('costs');
+    }
+
+    function createCost($name){
+      $this->db->query("ALTER TABLE costs ADD ". $name ." INT NOT NULL DEFAULT 0");
+    }
+
+    function renameCostsColumn($old, $name){
+      $this->db->query("ALTER TABLE costs CHANGE $old $name INT");
+    }
+
+    function deleteCostFromInventory($data){
+      $toDelete = $data['name'];
+      $this->db->query("ALTER TABLE costs DROP COLUMN ". $toDelete);
+    }
 }
