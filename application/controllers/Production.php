@@ -49,6 +49,7 @@ class Production extends Application
       }
       //gets the name of the recipe
       $itemName = $newData["name"];
+      $id = $newData["id"];
       $this->data['name'] = $itemName;
       //unset any unwanted data
       unset($newData["id"], $newData["name"], $newData["numberYielded"], $newData["recipe"]);
@@ -83,11 +84,11 @@ class Production extends Application
         next($newData);
       }
 
-      if($ableToMake){
+      if ( $ableToMake ) {
           $message = "You can create this recipe. Would you like make " . $itemName . "?";
-      }else{
+          $message .= '<br><br><a href="/production/create/' . $id .'" class="btn btn-success">Create Now</a>';
+      } else
           $message = "You can can't create this recipe. Please buy more ingredients.";
-      }
 
       $this->data['message'] = $message;
       $this->data['ingredients'] = $ingredients;
@@ -103,5 +104,57 @@ class Production extends Application
         }
 
         return $newArray;
+    }
+
+    public function create($id) {
+        // die($id);
+        $record = $this->recipes->getWithCost($id)[0];
+        $recordWithoutCost = (array) $this->recipes->get($id);
+        $inventoryList = $this->santize_input($this->inventory->all());
+        $stocks = $this->santize_input($this->stock->all());
+
+        $stock;
+
+        foreach( $stocks as $value )
+            if( $value['name'] == $record['name'] ) {
+                $stock = $value;
+                break;
+            }
+
+
+        $itemsNeeded = array();
+
+        foreach ( $record as $name => $cost )
+            if ( $name != 'recipe' &&
+                 $name != 'numberYielded' &&
+                 $name != 'name' &&
+                 $name != 'id' &&
+                 intval($cost) > 0 )
+            {
+                $itemsNeeded[$name] = intval($cost);
+            }
+
+        foreach ( $itemsNeeded as $name => $cost )
+            foreach ( $inventoryList as $key => $value )
+                if ( $value['name'] == $name ) {
+                    $newInventoryCount = intval($value['quantity']) - $cost;
+                    // die( ( $value['quantity'] - $cost ) ) ;
+                    $value['quantity'] = $newInventoryCount;
+                    $this->inventory->update($value, $newInventoryCount);
+                    // breaking out of the inner foreach loop
+                    break;
+                }
+
+
+        $newNumberYielded = intval($recordWithoutCost['numberYielded']);
+        $newNumberYielded++;
+        $recordWithoutCost['numberYielded'] = $newNumberYielded;
+
+        $stock['quantity'] += 1;
+
+        $this->stock->update($stock);
+        $this->recipes->update($recordWithoutCost);
+
+        redirect('/production');
     }
 }
