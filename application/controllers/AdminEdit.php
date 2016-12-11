@@ -9,6 +9,15 @@ class AdminEdit extends Application{
   }
 
   function index(){
+
+    $userrole = $this->session->userdata('userrole');
+    if ($userrole != 'admin') {
+            $message = 'You are not authorized to access this page. Go away';
+            $this->data['content'] = $message;
+            $this->render();
+            return;
+        }
+
     $this->data['pagebody'] = 'admin_page'; // which view to display on
 
     $result = $this->stock->all();
@@ -226,6 +235,67 @@ class AdminEdit extends Application{
   function deleteRecipe($id){
       $this->recipes->deleteCost($id);
       $this->recipes->delete($id);
+      redirect('/adminedit', 'refresh');
+  }
+
+  function addInventory($error = ""){
+    $this->data['pagebody'] = 'admin_add_inventory';
+    $this->data['error'] = $error;
+    $this->render();
+  }
+
+  function addInventoryDone(){
+    //handle invalid data
+    $name = $this->input->post('name');
+    $supplier = $this->input->post('supplier');
+    $price = $this->input->post('price');
+    $quantity = $this->input->post('quantity');
+    if(trim($name) == null || trim($name) == "" || trim($supplier) == null || trim($supplier) == "" || trim($price) == null || !is_numeric($price)
+    || !is_numeric($quantity) || trim($quantity) == null || trim($quantity) == ""){
+      $this->data['error'] = "Invalid arguments";
+      redirect('/adminedit/addInventory');
+    }
+    $data = array(
+      'id' => null,
+      'name' => $name,
+      'supplier' => $supplier,
+      'price' => $price,
+      'quantity' => $quantity
+    );
+    $this->inventory->add($data);
+    redirect('/adminedit', 'refresh');
+  }
+
+  function editInventory($id){
+    $this->data['pagebody'] = 'admin_edit_inventory';
+    $result = $this->inventory->get($id);
+    $array = json_decode(json_encode($result), true);
+    $this->data['name'] = $array["name"];
+    $this->data['supplier'] = $array["supplier"];
+    $this->data['price'] = $array["price"];
+    $this->data['id'] = $id;
+    $this->data['quantity'] = $array["quantity"];
+    $this->render();
+  }
+
+  function editInventoryDone(){
+    //handle invalid data
+    $id = $this->input->post('id');
+    $name = $this->input->post('name');
+    $supplier = $this->input->post('supplier');
+    $price = $this->input->post('price');
+    $quantity = $this->input->post('quantity');
+    if(trim($name) == null || trim($name) == "" || trim($supplier) == null || trim($supplier) == "" || trim($price) == null || trim($quantity) == null || trim($quantity) == ""){
+      $this->data['error'] = "Invalid arguments";
+      redirect('/adminedit/editInventory/'.$id);
+    }
+    $record = array('id' => $id, 'name' => $name, 'supplier' => $supplier, 'price' => $price, 'quantity' => $quantity);
+    $this->inventory->update($record);
+    redirect('/adminedit');
+  }
+
+  function deleteInventory($id){
+      $this->inventory->delete($id);
       redirect('/adminedit', 'refresh');
   }
 }
