@@ -20,3 +20,6 @@
 - added summary of data to homepage, refactored Stock model - KL
 - added quantity box in sales and included a thank you message - BC
 - updated exsisting files for better cosistency; added more styling to pages, revamped all the single-item pages and fixed error where bootstrap wasn't linked to pages properly; - MK
+
+##### Release 2.0
+- updated models to use database for data, added ci_sessions; updated controllers to work with the data thats being fetched from db - inqr
