@@ -24,4 +24,6 @@
             </tr>
         </tbody>
     </table>
-</div>
+</div>
+
+<a role="button" class="btn btn-success" href="/receiving">Back to List</a>

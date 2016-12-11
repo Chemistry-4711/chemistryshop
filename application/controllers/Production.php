@@ -152,9 +152,38 @@ class Production extends Application
 
         $stock['quantity'] += 1;
 
+        // generate XML transaction
+        $this->saveOrder($stock['id'], $stock['name'], 1);
+
         $this->stock->update($stock);
         $this->recipes->update($recordWithoutCost);
 
         redirect('/production');
+    }
+
+    public function saveOrder($id, $name, $quantity) {
+        $number = 0;
+        // figure out the order to use
+        while ($number == 0) {
+            // pick random 3 digit #
+            $test = rand(100,999);
+            // use this if the file doesn't exist
+            if (!file_exists('../data/production'.$test.'.xml'))
+                    $number = $test;
+        }
+
+        // start empty
+        $xml = new SimpleXMLElement('<order/>');
+        // add the main properties
+        $xml->addChild('number', $number);
+        $xml->addChild('datetime',  date(DATE_ATOM));
+
+        $lineitem = $xml->addChild('item');
+        $lineitem->addChild('code', $id);
+        $lineitem->addChild('name', $name);
+        $lineitem->addChild('quantity', $quantity);
+
+        // save it
+        $xml->asXML('../data/production' . $number . '.xml');
     }
 }
