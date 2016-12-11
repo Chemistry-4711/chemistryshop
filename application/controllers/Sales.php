@@ -23,11 +23,9 @@ class Sales extends Application{
     // public function get($id){
     //
     //
-    //     $this->data['pagebody'] = 'sales_order';
     //     $item = $this->stock->get($id);
-    //
-    //     $this->data = array_merge($this->data, $item);
-    //     $this->render();
+    // $item = json_decode(json_encode($item), true);
+    // $this->data = array_merge($this->data, $item);
     // }
 
     public function add($item) {
@@ -51,31 +49,11 @@ class Sales extends Application{
 
         $this->data['stock'] = $source;    // allows use variables in views
 
-
-        // $stuff = $order->receipt();
-        // $this->data['receipt'] = $this->parsedown->parse($stuff);
-        // $this->data['content'] = '';
-        //
-        // // pictorial menu
-        // $count = 1;
-        // foreach ($this->categories->all() as $category) {
-        //     $chunk = 'category'.$count;
-        //     $this->data[$chunk] = $this->parser->parse('category-shop', $category, true);
-        //     foreach ($this->menu->all() as $menuitem) {
-        //         if ($menuitem->category != $category->id) {
-        //             continue;
-        //         }
-        //         $this->data[$chunk] .= $this->parser->parse('menuitem-shop', $menuitem, true);
-        //     }
-        //     ++$count;
-        // }
         $this->render('template_sales');
     }
 
     public function checkout() {
         $order = new Order($this->session->userdata('order'));
-
-
         // ignore invalid requests
         // if (! $order->validate())
         //     redirect('/sales/neworder');
