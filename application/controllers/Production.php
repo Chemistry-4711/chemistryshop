@@ -1,73 +1,90 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Production extends Application{
+class Production extends Application
+{
 
 // Constructor
-  function __construct(){
-    parent::__construct();
+  public function __construct()
+  {
+      parent::__construct();
   }
 
   /**
   * Homepage for the recipes
   */
-  public function index(){
-
+  public function index()
+  {
       $this->data['pagebody'] = 'recipes_list';
 
       $recipes = $this->santize_input($this->recipes->all());
 
       $this->data['recipes'] = $recipes;
       $this->render();
-
   }
 
   /*
   * Shows a single recipe with the ingredients needed for it to be created
   */
-  public function show($id){
-
+  public function show($id)
+  {
       $this->data['pagebody'] = 'recipes_single';
 
-      $recipe = $this->recipes->get($id);
-      $recipe = json_decode(json_encode($recipe), true);
+      //gets all recipes with costs **comes back as an array of arrays
+      $tmp = $this->recipes->getWithCost($id);
 
-      // merge the data for recipe
-      $this->data = array_merge($this->data, $recipe);
-
-      // get the names of the ingredients
-      $names = array_keys($recipe['cost']);
-
-      // get the cost
-      $cost = $recipe['cost'];
-
-      // ingredients array to store the names
+      $newData = array(); // initialize the array we will be working with later once the data is parsed and sorted
+      foreach ($tmp as $a) {
+          foreach ($a as $value) {
+              if ($value == "0") {
+                  //unset any ingredients that we don't need
+              $toDelete = array_search($value, $a);
+                  unset($a[$toDelete]);
+              }
+          }
+          //since there is only 1 recipe we are interested in
+          $newData = $a;
+      }
+      //gets the name of the recipe
+      $itemName = $newData["name"];
+      $this->data['name'] = $itemName;
+      //unset any unwanted data
+      unset($newData["id"], $newData["name"], $newData["numberYielded"], $newData["recipe"]);
       $ingredients = array();
-      // flag to check if its able to make
       $ableToMake = true;
-      foreach($names as $name)
-      {
-          // get the inventory of the ingredient
-          $inventory = $this->inventory->get($name);
+      //loop through the current data we have
 
-          // check if theres enough of ingredients required
-          $amount = ($inventory['quantity'] - $cost[$name]);
+      $inventoryList = $this->santize_input($this->inventory->all());
 
-          // flags ingredients that are not available
-          if($amount < 0){
-              $ableToMake = false;
-              $ingredients[] = array('name' => $name, 'costToMake' => $cost[$name], 'inventory' => $inventory['quantity'], 'available' => "Not Enough Available");
-          }else {
-              $ingredients[] = array('name' => $name, 'costToMake' => $cost[$name], 'inventory' => $inventory['quantity'], 'available' => "Enough Available");
+      while ($ingredient = current($newData)) {
+
+          $key = key($newData);//the name of the ingredient we are interested in
+          $name = $key;
+          // finding the id of our item
+          foreach ( $inventoryList as $inventoryItem ) {
+              if($inventoryItem['name'] == $key) {
+                  $key = $inventoryItem['id'];
+                  break;
+              }
           }
 
+          $inventory = json_decode(json_encode($this->inventory->get($key)), true);
+
+          $amount = (intval($inventory['quantity']) - intval($ingredient));
+          if ($amount < 0) {
+              $ableToMake = false;
+              $ingredients[] = array('name' => $name, 'costToMake' => $newData[$name], 'inventory' => $inventory['quantity'], 'available' => "Not Enough Available");
+          } else {
+              $ingredients[] = array('name' => $name, 'costToMake' => $newData[$name], 'inventory' => $inventory['quantity'], 'available' => "Enough Available");
+          }
+        //go to next element in the array
+        next($newData);
       }
 
-      // generate the message if recipe is makeable
-      if($ableToMake){
-          $message = "You can create this recipe. Would you like make " . $recipe['name'] . "?";
-      }else{
+      if ($ableToMake) {
+          $message = "You can create this recipe. Would you like make " . $itemName . "?";
+      } else {
           $message = "You can can't create this recipe. Please buy more ingredients.";
       }
 
@@ -76,12 +93,13 @@ class Production extends Application{
       $this->render();
   }
 
-  private function santize_input($record) {
-      $newArray;
-      foreach ( $record as $key => $value )
-          $newArray[$key] = json_decode(json_encode($value), true);
+    private function santize_input($record)
+    {
+        $newArray;
+        foreach ($record as $key => $value) {
+            $newArray[$key] = json_decode(json_encode($value), true);
+        }
 
-      return $newArray;
-  }
-
+        return $newArray;
+    }
 }

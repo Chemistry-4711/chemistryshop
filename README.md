@@ -23,3 +23,5 @@
 
 ##### Release 2.0
 - updated models to use database for data, added ci_sessions; updated controllers to work with the data thats being fetched from db - inqr
+- updated styles for navbar - MK
+- added communication to backend and updated the controllers to complement the changes - MK
