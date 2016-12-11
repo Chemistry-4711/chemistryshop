@@ -8,3 +8,4 @@
 application/config/development
 application/database.php
 */config/database.php
+data/*.xml
