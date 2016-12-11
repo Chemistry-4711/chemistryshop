@@ -262,6 +262,7 @@ class AdminEdit extends Application{
       'price' => $price,
       'quantity' => $quantity
     );
+    $this->recipes->createCost($name);
     $this->inventory->add($data);
     redirect('/adminedit', 'refresh');
   }
@@ -275,6 +276,7 @@ class AdminEdit extends Application{
     $this->data['price'] = $array["price"];
     $this->data['id'] = $id;
     $this->data['quantity'] = $array["quantity"];
+    $this->data['costsname'] = $array["name"];
     $this->render();
   }
 
@@ -285,16 +287,21 @@ class AdminEdit extends Application{
     $supplier = $this->input->post('supplier');
     $price = $this->input->post('price');
     $quantity = $this->input->post('quantity');
+    $oldName = $this->input->post('costsname');
     if(trim($name) == null || trim($name) == "" || trim($supplier) == null || trim($supplier) == "" || trim($price) == null || trim($quantity) == null || trim($quantity) == ""){
       $this->data['error'] = "Invalid arguments";
       redirect('/adminedit/editInventory/'.$id);
     }
     $record = array('id' => $id, 'name' => $name, 'supplier' => $supplier, 'price' => $price, 'quantity' => $quantity);
     $this->inventory->update($record);
+    $this->recipes->renameCostsColumn($oldName, $name);
     redirect('/adminedit');
   }
 
   function deleteInventory($id){
+      $result = $this->inventory->get($id);
+      $array = json_decode(json_encode($result), true);
+      $this->recipes->deleteCostFromInventory($array);
       $this->inventory->delete($id);
       redirect('/adminedit', 'refresh');
   }

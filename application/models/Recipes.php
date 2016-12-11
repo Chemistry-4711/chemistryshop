@@ -70,4 +70,17 @@ class Recipes extends MY_Model {
       $this->db->where('name', $toDelete);
       $this->db->delete('costs');
     }
+
+    function createCost($name){
+      $this->db->query("ALTER TABLE costs ADD ". $name ." INT NOT NULL DEFAULT 0");
+    }
+
+    function renameCostsColumn($old, $name){
+      $this->db->query("ALTER TABLE costs CHANGE $old $name INT");
+    }
+
+    function deleteCostFromInventory($data){
+      $toDelete = $data['name'];
+      $this->db->query("ALTER TABLE costs DROP COLUMN ". $toDelete);
+    }
 }
