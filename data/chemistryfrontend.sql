@@ -66,7 +66,6 @@ CREATE TABLE `Recipes` (
 
 --
 -- Dumping data for table `Recipes`
---
 
 LOCK TABLES `Recipes` WRITE;
 /*!40000 ALTER TABLE `Recipes` DISABLE KEYS */;
