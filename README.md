@@ -25,3 +25,4 @@
 - updated models to use database for data, added ci_sessions; updated controllers to work with the data thats being fetched from db - inqr
 - updated styles for navbar - MK
 - added communication to backend and updated the controllers to complement the changes - MK
+- updated the production controller to be able to create recipes and updated the inventory model to be able to make POST, PUT, DELETE requests
