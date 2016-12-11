@@ -22,7 +22,7 @@
                 <td>{quantity}</td>
                 <td><input class="form-control" type="numeric" style="width:40px;" value="1"/></td>
                 <td>{price}</td>
-                <td><a href="/sales/get/{id}"><button type="button" class="btn btn-default btn-danger btn-sm">Order Now</button></a></td>
+                <td><a href="/sales/add/{id}"><button type="button" class="btn btn-default btn-danger btn-sm">Add to Cart</button></a></td>
             </tr>
             {/stock}
         </tbody>
