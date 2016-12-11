@@ -26,7 +26,7 @@ class Sales extends Application{
 
         $this->data['pagebody'] = 'sales_order';
         $item = $this->stock->get($id);
-
+        $item = json_decode(json_encode($item), true);
         $this->data = array_merge($this->data, $item);
         $this->render();
     }
