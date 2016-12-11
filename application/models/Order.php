@@ -53,10 +53,10 @@ class Order extends CI_Model
 
 
         foreach($this->items as $key => $value) {
-            // ** GRABS FROM HARDCODED DATA FOR NOW **
-            $stock = $this->stock->get($key);
-            $result .= '- ' . $value . ' ' . $stock['name'] . PHP_EOL;
-            $total += $value * $stock['price'];
+            $item = $this->stock->get($key);
+            $item = json_decode(json_encode($item), true);
+            $result .= '- ' . $value . ' ' . $item['name'] . PHP_EOL;
+            $total += $value * $item['price'];
         }
         $result .= PHP_EOL . 'Total: $' . number_format($total, 2) . PHP_EOL;
         return $result;
@@ -110,10 +110,9 @@ class Order extends CI_Model
         $total = 0;
 
         foreach($this->items as $key => $value) {
-            $stock = $this->stock->get($key);
-
-            // ** USES DATA VALUES FOR NOW **
-            $total += $value * $stock['price'];
+            $item = $this->stock->get($key);
+            $item = json_decode(json_encode($item), true);
+            $total += $value * $item['price'];
         }
 
         return $total;
