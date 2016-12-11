@@ -9,6 +9,10 @@
     <br>
     <h2> Summary of our shop: </h2>
     <br>
+    Our best seller is {bestSeller}.
+    <br>
+    We have sold ${salesTotal} worth of chemistry stuff.
+    <br>
     We have ${ingredientsTotal} worth of ingredients on hand.
     <br>
     We have ${stocksTotal} worth of stock for sale.

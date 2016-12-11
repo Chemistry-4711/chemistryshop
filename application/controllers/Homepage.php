@@ -21,10 +21,67 @@ class Homepage extends Application
     {
         $this->data['pagebody'] = 'welcome_message';
 
+        $this->salesSummary();
         $this->ingredientsSummary();
         $this->stocksSummary();
 
         $this->render();
+    }
+
+    /*
+    *  Gets the price of all the sales processed using the XML transactions files
+    */
+    private function salesSummary() {
+
+        $this->load->helper('directory');
+        $candidates = directory_map('../data/');
+
+        $total = 0;
+
+        // key, value array to find best seller
+        $recipes = array();
+
+        foreach ($candidates as $filename) {
+            if (substr($filename,0,5) == 'order') {
+
+                // load the xml file
+                $xml = simplexml_load_file('../data/' . $filename);
+
+                foreach ($xml->item as $item) {
+                    $id = (string) $item->code;
+                    $quantity = (int) $item->quantity;
+
+                    // get the recipe
+                    $recipe = (array) $this->stock->get($id);
+
+                    // add to quantity
+                    $id = $recipe['id'];
+                    if (!isset($recipes[$id])) {
+                        $recipes[$id] = $quantity;
+                    } else {
+                        // increment the quantity
+                        $recipes[$id] += $quantity;
+                    }
+
+                    // add to the total
+                    $total += $recipe['price'] * $quantity;
+                }
+            }
+        }
+
+        // get the best seller
+        $best = 0;
+        $id;
+        foreach($recipes as $key => $value) {
+            if($value > $best){
+                $best = $value;
+                $id   = $key;
+            }
+        }
+        $item = (array)$this->stock->get($id);
+        $this->data['bestSeller'] = $item['name'];
+
+        $this->data['salesTotal'] = number_format($total, 2);
     }
 
     /*
