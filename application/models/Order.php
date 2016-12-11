@@ -53,7 +53,7 @@ class Order extends CI_Model
 
 
         foreach($this->items as $key => $value) {
-            // ** GRABS FROM HARDCODED DATA FOR NOW ** 
+            // ** GRABS FROM HARDCODED DATA FOR NOW **
             $stock = $this->stock->get($key);
             $result .= '- ' . $value . ' ' . $stock['name'] . PHP_EOL;
             $total += $value * $stock['price'];
@@ -111,7 +111,9 @@ class Order extends CI_Model
 
         foreach($this->items as $key => $value) {
             $stock = $this->stock->get($key);
-            $total += $value * $stock->price;
+
+            // ** USES DATA VALUES FOR NOW **
+            $total += $value * $stock['price'];
         }
 
         return $total;

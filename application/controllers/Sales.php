@@ -11,13 +11,12 @@ class Sales extends Application{
     }
 
     public function index() {
-            //$this->load->model('stock');
-            $this->data['pagebody'] = 'summary'; // which view to display on
-
-            $source = $this->stock->all();
-
-            $this->data['stock'] = $source;    // allows use variables in views
-            $this->render();
+        // What is the user up to?
+       if ($this->session->has_userdata('order')) {
+           $this->keep_shopping();
+       } else {
+           $this->summarize();
+       }
     }
 
     //subcontroller
@@ -73,6 +72,19 @@ class Sales extends Application{
         $this->render('template_sales');
     }
 
+    public function checkout() {
+        $order = new Order($this->session->userdata('order'));
+
+
+        // ignore invalid requests
+        // if (! $order->validate())
+        //     redirect('/sales/neworder');
+
+        $order->save();
+        $this->session->unset_userdata('order');
+        redirect('/sales');
+    }
+
     public function cancel()
     {
         // Drop any order in progress
@@ -93,6 +105,35 @@ class Sales extends Application{
         }
 
         $this->keep_shopping();
+    }
+
+    public function summarize() {
+        // identify all of the order files
+        $this->load->helper('directory');
+        $candidates = directory_map('../data/');
+        $parms = array();
+        foreach ($candidates as $filename) {
+           if (substr($filename,0,5) == 'order') {
+               // restore that order object
+               $order = new Order ('../data/' . $filename);
+            // setup view parameters
+               $parms[] = array(
+                   'number' => $order->number,
+                   'datetime' => $order->datetime,
+                   'total' => $order->total()
+                       );
+            }
+        }
+        $this->data['orders'] = $parms;
+        $this->data['pagebody'] = 'summary';
+        $this->render('template');  // use the default template
+    }
+
+    public function examine($which) {
+        $order = new Order ('../data/order' . $which . '.xml');
+        $stuff = $order->receipt();
+        $this->data['content'] = $this->parsedown->parse($stuff);
+        $this->render();
     }
 
 }
