@@ -1,6 +1,7 @@
 <h1>Administrator Page</h1>
 <br>
 <br>
+
 <div class=table-responsive>
   <h2>Inventory</h2>
     <table class="table">

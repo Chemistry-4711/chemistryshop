@@ -4,7 +4,7 @@
 
 <div class=table-responsive>
   <h2>Edit a Recipe</h2>
-  <form method="POST" action="http://ass2front.local/adminedit/finishrecipeedit">
+  <form method="POST" action="/adminedit/editrecipedone">
     <table class="table">
         <thead>
             <tr>
@@ -14,32 +14,34 @@
           </tr>
         </thead>
         <tbody>
-            {recipesData}
             <tr>
               <td>Name</td>
               <td></td>
-              <td><input class="form-control" style="width:100px;" value="{name}"/></td>
+              <td><input class="form-control" name="name" style="width:200px;" value="{name}"/></td>
             </tr>
             <tr>
               <td>Number Yielded</td>
               <td></td>
-              <td><input class="form-control" style="width:100px;" value="{numberYielded}"/></td>
+              <td><input class="form-control" name="numberYielded" style="width:100px;" value="{numberYielded}"/></td>
             </tr>
             <tr>
               <td>Recipe</td>
               <td></td>
-              <td><input class="form-control" type="numeric" style="width:300px;" value="{recipe}"/></td>
+              <td><input class="form-control" name="recipe" style="width:400px;" value="{recipe}"/></td>
+              <input name="id" type="hidden" value="{id}"/>
+              <input name="costid" type="hidden" value="{costid}"/>
             </tr>
-            {costs}
-              <tr>
-                <td>{itemName}</td>
-                <td></td>
-                <td><input class="form-control" type="numeric" style="width:300px;" value="{itemValue}"/></td>
-              </tr>
-            {/costs}
-            {/recipesData}
+            {costItems}
             <tr>
-              <td><input type="submit" name="editRecipe" value="Edit"></td>
+              <td>{name}</td>
+              <td></td>
+              <td><input class="form-control" name="{name}" style="width:100px;" value="{value}"/></td>
+            </tr>
+            {/costItems}
+            <tr>
+              <td><button type="submit" class="btn btn-default btn-danger btn-sm">Edit</button></td>
+              <td></td>
+              <td></td>
             </tr>
         </tbody>
     </table>
