@@ -34,6 +34,7 @@
                 <td></td>
                 <td><input class="form-control" name="quantity" type="numeric" style="width:100px;" value="{quantity}"/></td>
                 <input name="id" type="hidden" value="{id}"/>
+                <input name="costsname" type="hidden" value="{costsname}"/>
               </tr>
               <tr>
                 <td><button type="submit" class="btn btn-default btn-danger btn-sm">Edit</button></td>
