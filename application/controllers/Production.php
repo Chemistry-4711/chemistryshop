@@ -55,6 +55,7 @@ class Production extends Application
       unset($newData["id"], $newData["name"], $newData["numberYielded"], $newData["recipe"]);
       $ingredients = array();
       $ableToMake = true;
+      $ingredientHere = true;
       //loop through the current data we have
 
       $inventoryList = $this->santize_input($this->inventory->all());
@@ -72,14 +73,20 @@ class Production extends Application
           }
 
           $inventory = json_decode(json_encode($this->inventory->get($key)), true);
-
-          $amount = (intval($inventory['quantity']) - intval($ingredient));
-          if ($amount < 0) {
-              $ableToMake = false;
-              $ingredients[] = array('name' => $name, 'costToMake' => $newData[$name], 'inventory' => $inventory['quantity'], 'available' => "Not Enough Available");
-          } else {
-              $ingredients[] = array('name' => $name, 'costToMake' => $newData[$name], 'inventory' => $inventory['quantity'], 'available' => "Enough Available");
+          if(array_key_exists("error", $inventory)){
+            $ableToMake = false;
+            $ingredientHere = false;
+            $ingredients[] = array('name' => "Missing ingredient", 'costToMake' => "", 'inventory' => "", 'available' => "Not Enough Available");
+          }else{
+            $amount = (intval($inventory['quantity']) - intval($ingredient));
+            if ($amount < 0) {
+                $ableToMake = false;
+                $ingredients[] = array('name' => $name, 'costToMake' => $newData[$name], 'inventory' => $inventory['quantity'], 'available' => "Not Enough Available");
+            } else {
+                $ingredients[] = array('name' => $name, 'costToMake' => $newData[$name], 'inventory' => $inventory['quantity'], 'available' => "Enough Available");
+            }
           }
+
         //go to next element in the array
         next($newData);
       }
@@ -90,6 +97,9 @@ class Production extends Application
       } else
           $message = "You can can't create this recipe. Please buy more ingredients.";
 
+          if(!$ingredientHere){
+            $message = "An ingredient is missing from the recipe (possibly deleted?)";
+          }
       $this->data['message'] = $message;
       $this->data['ingredients'] = $ingredients;
       $this->render();
