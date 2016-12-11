@@ -36,26 +36,9 @@ class Receiving extends Application{
     $this->render();
   }
 
-  public function validate($id){
-      global $bulk;
-
-      $item = array();
-      $item = (array) $this->inventory->get($id);
-
-      // check if theres enough
-      if($item['quantity'] >= $bulk) {
-          return true;
-      }else{
-          return false;
-      }
-  }
 
   public function buy($id){
     global $bulk;
-
-    // check if valid
-    if (!$this->validate($id))
-        redirect('/receiving');
 
     $this->data['pagebody'] = 'inventoryReceipt';
     $source = array();
