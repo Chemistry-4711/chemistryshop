@@ -8,7 +8,7 @@ define('REST_SERVER', 'http://backend.local');
 define('REST_PORT', $_SERVER['SERVER_PORT']);
 
 class Inventory extends CI_Model {
-    
+
     // Constructor
     public function __construct()
     {
@@ -35,5 +35,3 @@ class Inventory extends CI_Model {
     }
 
 }
-
-?>

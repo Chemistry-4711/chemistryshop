@@ -35,13 +35,14 @@ class Production extends Application
       $tmp = $this->recipes->getWithCost($id);
 
       $newData = array(); // initialize the array we will be working with later once the data is parsed and sorted
-      foreach ($tmp as $a) {
-          foreach ($a as $value) {
-              if ($value == "0") {
-                  //unset any ingredients that we don't need
+
+      foreach($tmp as $a){
+          foreach($a as $value){
+            if($value == "0"){
+              //unset any ingredients that we don't need
               $toDelete = array_search($value, $a);
-                  unset($a[$toDelete]);
-              }
+              unset($a[$toDelete]);
+            }
           }
           //since there is only 1 recipe we are interested in
           $newData = $a;
@@ -82,15 +83,16 @@ class Production extends Application
         next($newData);
       }
 
-      if ($ableToMake) {
+      if($ableToMake){
           $message = "You can create this recipe. Would you like make " . $itemName . "?";
-      } else {
+      }else{
           $message = "You can can't create this recipe. Please buy more ingredients.";
       }
 
       $this->data['message'] = $message;
       $this->data['ingredients'] = $ingredients;
       $this->render();
+
   }
 
     private function santize_input($record)
