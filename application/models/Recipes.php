@@ -29,4 +29,45 @@ class Recipes extends MY_Model {
       $data = $result->result_array();
       return $data;
     }
+
+    function getAllCostItems(){
+      $result = $this->db->query("SELECT * FROM costs");
+      $data = $result->result_array();
+      return $data;
+    }
+
+    function addCostItem($data){
+      $this->db->insert('costs', $data);
+    }
+
+    function getCostItem($id){
+      $result = $this->db->query("SELECT name FROM recipes WHERE id=$id");
+      $value = $result->result_array();
+      $toEdit = "";
+      foreach($value as $x){
+        $toEdit = $x['name'];
+        break;
+      }
+
+      $costItem = $this->db->query("SELECT * FROM costs WHERE name='$toEdit'");
+      $costItemResult = $costItem->result_array();
+      return $costItemResult;
+    }
+
+    function editCostItem($data){
+      $this->db->where('id', $data['id']);
+      $this->db->update('costs', $data);
+    }
+
+    function deleteCost($id){
+      $result = $this->db->query("SELECT name FROM recipes WHERE id=$id");
+      $value = $result->result_array();
+      $toDelete = "";
+      foreach($value as $x){
+        $toDelete = $x['name'];
+        break;
+      }
+      $this->db->where('name', $toDelete);
+      $this->db->delete('costs');
+    }
 }
