@@ -1,10 +1,11 @@
 <?php
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+* This is the model that will be getting its information from the backend database by using API's
  */
+
+define('REST_SERVER', 'http://backend.local');
+define('REST_PORT', $_SERVER['SERVER_PORT']);
 
 class Inventory extends CI_Model {
 
@@ -24,23 +25,25 @@ class Inventory extends CI_Model {
     public function __construct()
     {
         parent::__construct();
+        $this->load->library(['curl', 'format', 'rest']);
     }
 
     // retrieve a single inventory item
     public function get($selected)
     {
-        // iterate over the data until we find the one we want
-        foreach ($this->data as $inventory)
-            if ($inventory['name'] == $selected)
-                return $inventory;
-
-        return null;
+        $this->rest->initialize(array('server' => REST_SERVER));
+        $this->rest->option(CURLOPT_PORT, REST_PORT);
+        $result = $this->rest->get('/InventoryApi/item/id/' . $selected);
+        return $result;
     }
 
     // retrieve all of the inventories
     public function all()
     {
-        return $this->data;
+        $this->rest->initialize(array('server' => REST_SERVER));
+        $this->rest->option(CURLOPT_PORT, REST_PORT);
+        $result = $this->rest->get('/InventoryApi');
+        return $result;
     }
 
 }
